@@ -8,15 +8,14 @@ API_HASH = os.environ.get('API_HASH')
 N8N_WEBHOOK = os.environ.get('N8N_WEBHOOK')
 
 DEAL_CHANNELS = [
-    'osmdhruvaDeals',
-    'telugutechworld',
-    'jsktechdeals',
-    'tirupatiDeals',
-    'kothimeerkattadeals',
-    'prasadtechintelugu',
+    'osmdhruva',
+    'jsktechdealz',
+    'tirupatideals',
+    'KothimeerKattaaDeals',
     'ttsdeals',
     'telugutechtvdeals',
-    'premiumdeals'
+    'iamprasadtech',
+    'TeluguTechworld'
 ]
 
 client = TelegramClient('session', API_ID, API_HASH)
@@ -26,9 +25,13 @@ async def handler(event):
     message = event.message.message
     if not message:
         return
+    
+    lines = message.strip().split('\n')
+    formatted = f"🔥🔥\n{message}"
+    
     async with aiohttp.ClientSession() as session:
         await session.post(N8N_WEBHOOK, json={
-            'message': message
+            'message': formatted
         })
     print(f'Deal forwarded: {message[:50]}')
 
